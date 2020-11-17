@@ -305,16 +305,16 @@ pylith::fekernels::IsotropicPowerLawPlaneStrain::Jg3vu(const PylithInt dim,
         const PylithScalar factor4 = factor2*(1.0 - powerLawAlpha);
 
         /* Unique components of Jacobian. */
-        PylithReal C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
-                                 factor4*devStressTpdt[3]*devStressT[3] + ae));
-        PylithReal C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
+                      factor4*devStressTpdt[3]*devStressT[3] + ae));
+        C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
     } // if
 
     /* j(f,g,df,dg) = C(f,df,g,dg)
@@ -483,16 +483,16 @@ pylith::fekernels::IsotropicPowerLawPlaneStrain::Jg3vu_refstate(const PylithInt 
         const PylithScalar factor4 = factor2*(1.0 - powerLawAlpha);
 
         /* Unique components of Jacobian. */
-        PylithReal C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
-                                 factor4*devStressTpdt[3]*devStressT[3] + ae));
-        PylithReal C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
+                      factor4*devStressTpdt[3]*devStressT[3] + ae));
+        C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
     } // if
 
     /* j(f,g,df,dg) = C(f,df,g,dg)
@@ -1421,6 +1421,7 @@ pylith::fekernels::IsotropicPowerLawPlaneStrain::cauchyStress(const PylithInt di
     stressVector[0] = stressTensor[0];
     stressVector[1] = stressTensor[0];
     stressVector[2] = stressTensor[0];
+    stressVector[3] = 0.0;
 
     // Compute deviatoric stress vector (4 components).
     deviatoricStress4(_dim, _numS, numADev, sOffDisp, sOffDisp_x, s, s_t, s_x, aOffDev, NULL, a, a_t, NULL,
@@ -1503,6 +1504,7 @@ pylith::fekernels::IsotropicPowerLawPlaneStrain::cauchyStress_refstate(const Pyl
     stressVector[0] = stressTensor[0];
     stressVector[1] = stressTensor[0];
     stressVector[2] = stressTensor[0];
+    stressVector[3] = 0.0;
 
     // Compute deviatoric stress vector (4 components).
     deviatoricStress4_refstate(_dim, _numS, numADev, sOffDisp, sOffDisp_x, s, s_t, s_x, aOffDev, NULL, a, a_t, NULL,
@@ -1805,24 +1807,24 @@ pylith::fekernels::IsotropicPowerLaw3D::Jg3vu(const PylithInt dim,
         const PylithScalar factor4 = factor2*(1.0 - powerLawAlpha);
 
         /* Unique components of Jacobian. */
-        PylithReal C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
-                                 factor4*devStressTpdt[3]*devStressT[3] + ae));
-        PylithReal C1313 = 1/(2*(factor3*devStressTpdt[5]*devStressTpdt[5] + factor1 +
-                                 factor4*devStressTpdt[5]*devStressT[5] + ae));
-        PylithReal C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2323 = 1/(2*(factor3*devStressTpdt[4]*devStressTpdt[4] + factor1 +
-                                 factor4*devStressTpdt[4]*devStressT[4] + ae));
-        PylithReal C3311 = bulkModulus - 1/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
-                                               factor4*devStressTpdt[2]*devStressT[2] + ae));
-        PylithReal C3333 = bulkModulus + 2/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
-                                               factor4*devStressTpdt[2]*devStressT[2] + ae));
+        C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
+                      factor4*devStressTpdt[3]*devStressT[3] + ae));
+        C1313 = 1/(2*(factor3*devStressTpdt[5]*devStressTpdt[5] + factor1 +
+                      factor4*devStressTpdt[5]*devStressT[5] + ae));
+        C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2323 = 1/(2*(factor3*devStressTpdt[4]*devStressTpdt[4] + factor1 +
+                      factor4*devStressTpdt[4]*devStressT[4] + ae));
+        C3311 = bulkModulus - 1/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
+                                    factor4*devStressTpdt[2]*devStressT[2] + ae));
+        C3333 = bulkModulus + 2/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
+                                    factor4*devStressTpdt[2]*devStressT[2] + ae));
     } // if
 
     /* j(f,g,df,dg) = C(f,df,g,dg)
@@ -2096,24 +2098,24 @@ pylith::fekernels::IsotropicPowerLaw3D::Jg3vu_refstate(const PylithInt dim,
         const PylithScalar factor4 = factor2*(1.0 - powerLawAlpha);
 
         /* Unique components of Jacobian. */
-        PylithReal C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
-                                               factor4*devStressTpdt[0]*devStressT[0] + ae));
-        PylithReal C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
-                                 factor4*devStressTpdt[3]*devStressT[3] + ae));
-        PylithReal C1313 = 1/(2*(factor3*devStressTpdt[5]*devStressTpdt[5] + factor1 +
-                                 factor4*devStressTpdt[5]*devStressT[5] + ae));
-        PylithReal C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
-                                               factor4*devStressTpdt[1]*devStressT[1] + ae));
-        PylithReal C2323 = 1/(2*(factor3*devStressTpdt[4]*devStressTpdt[4] + factor1 +
-                                 factor4*devStressTpdt[4]*devStressT[4] + ae));
-        PylithReal C3311 = bulkModulus - 1/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
-                                               factor4*devStressTpdt[2]*devStressT[2] + ae));
-        PylithReal C3333 = bulkModulus + 2/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
-                                               factor4*devStressTpdt[2]*devStressT[2] + ae));
+        C1111 = bulkModulus + 2/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1122 = bulkModulus - 1/(3*(factor3*devStressTpdt[0]*devStressTpdt[0] + factor1 +
+                                    factor4*devStressTpdt[0]*devStressT[0] + ae));
+        C1212 = 1/(2*(factor3*devStressTpdt[3]*devStressTpdt[3] + factor1 +
+                      factor4*devStressTpdt[3]*devStressT[3] + ae));
+        C1313 = 1/(2*(factor3*devStressTpdt[5]*devStressTpdt[5] + factor1 +
+                      factor4*devStressTpdt[5]*devStressT[5] + ae));
+        C2211 = bulkModulus - 1/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2222 = bulkModulus + 2/(3*(factor3*devStressTpdt[1]*devStressTpdt[1] + factor1 +
+                                    factor4*devStressTpdt[1]*devStressT[1] + ae));
+        C2323 = 1/(2*(factor3*devStressTpdt[4]*devStressTpdt[4] + factor1 +
+                      factor4*devStressTpdt[4]*devStressT[4] + ae));
+        C3311 = bulkModulus - 1/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
+                                    factor4*devStressTpdt[2]*devStressT[2] + ae));
+        C3333 = bulkModulus + 2/(3*(factor3*devStressTpdt[2]*devStressTpdt[2] + factor1 +
+                                    factor4*devStressTpdt[2]*devStressT[2] + ae));
     } // if
 
     /* j(f,g,df,dg) = C(f,df,g,dg)
@@ -2804,9 +2806,16 @@ pylith::fekernels::IsotropicPowerLaw3D::updateViscousStrain(const PylithInt dim,
                                   aOff[i_powerLawExponent], aOff[i_viscousStrain], aOff[i_stress]};
 
     // Compute current deviatoric stress.
-    PylithScalar devStressTpdt[9] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    PylithScalar stressTensor[9] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
     deviatoricStress(_dim, _numS, numADev, sOffDisp, sOffDisp_x, s, s_t, s_x, aOffDev, NULL, a, a_t, NULL,
-                     t, x, numConstants, constants, devStressTpdt);
+                     t, x, numConstants, constants, stressTensor);
+    const PylithScalar devStressTpdt[6] = {
+        stressTensor[0],
+        stressTensor[4],
+        stressTensor[8],
+        stressTensor[1],
+        stressTensor[5],
+        stressTensor[2]};
     const PylithScalar devStressProdTpdt = pylith::fekernels::Viscoelasticity::scalarProduct3D(devStressTpdt, devStressTpdt);
     const PylithScalar j2Tpdt = sqrt(0.5*devStressProdTpdt);
 
@@ -2924,9 +2933,16 @@ pylith::fekernels::IsotropicPowerLaw3D::updateViscousStrain_refstate(const Pylit
                                   aOff[i_stress]};
 
     // Compute current deviatoric stress.
-    PylithScalar devStressTpdt[9] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    PylithScalar stressTensor[9] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
     deviatoricStress_refstate(_dim, _numS, numADev, sOffDisp, sOffDisp_x, s, s_t, s_x, aOffDev, NULL, a, a_t, NULL,
-                              t, x, numConstants, constants, devStressTpdt);
+                              t, x, numConstants, constants, stressTensor);
+    const PylithScalar devStressTpdt[6] = {
+        stressTensor[0],
+        stressTensor[4],
+        stressTensor[8],
+        stressTensor[1],
+        stressTensor[5],
+        stressTensor[2]};
     const PylithScalar devStressProdTpdt = pylith::fekernels::Viscoelasticity::scalarProduct3D(devStressTpdt, devStressTpdt);
     const PylithScalar j2Tpdt = sqrt(0.5*devStressProdTpdt);
 
