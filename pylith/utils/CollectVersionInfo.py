@@ -18,7 +18,7 @@
 # @brief Python CollectVersionInfo object to collect version infofmation for PyLith
 # and its dependencies.
 
-from pyre.components.Component import Component
+from pythia.pyre.components.Component import Component
 
 import pylith.utils.utils as utils
 
